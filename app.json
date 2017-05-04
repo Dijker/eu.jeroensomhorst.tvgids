@@ -1,0 +1,69 @@
+{
+    "id": "eu.jeroensomhorst.tvgids",
+    "name": {
+        "en": "TVGids for Homey",
+        "nl": "TVGids voor Homey"
+    },
+    "description": {
+        "en": "Gives Homeh the possibility to react on tv programs",
+        "nl": "Geeft homey de mogelijkheid om te reageren op starten van programma's"
+    },
+    "images": {
+        "large": "./assets/images/large.png",
+        "small": "./assets/images/small.png"
+    }, 
+    "version": "0.0.1",
+    "compatibility": "1.x",
+    "author": {
+        "name": "Jeroen Somhorst",
+        "email": "j.somhorst@gmail.com"
+    },
+    "flow": {
+        "triggers": [{
+            "id": "program_start", 
+            "title": {
+                "en": "A program starts",
+                "nl": "Een programma start"
+            },
+            "args":[
+                {
+                    "name": "offset",
+                    "type": "dropdown",
+                    "values": [
+                        {
+                            "id": "5",
+                            "label": {
+                                "en": "5 minutes",
+                                "nl": "5 minuten"
+                            }
+                        },
+                        {
+                            "id": "10",
+                            "label": {
+                                "en": "10 minutes",
+                                "nl": "10 minuten"
+                            }
+                        },
+                        {
+                            "id": "15",
+                            "label": {
+                                "en": "15 minutes",
+                                "nl": "15 minuten"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "name",
+                    "type": "text",
+                    "placeholder": {
+                        "en": "Program contains following text",
+                        "nl": "Programma naam bevat de tekst"
+                    }
+                }
+            ]
+        }],
+        "conditions": [],
+        "actions": []
+    }
+}
