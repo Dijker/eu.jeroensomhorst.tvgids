@@ -81,6 +81,8 @@ class TvGidsApi extends HttpApi{
 
     getPrograms(channel,offset,sb,eb){
         var args = [];
+
+        
         args.push("channels");
         console.log(typeof channel);
         if(typeof channel === 'string'){
@@ -95,10 +97,12 @@ class TvGidsApi extends HttpApi{
         }
 
         var options = this.generateOptions("/json/lists/programs.php",args);
-        console.log(options);
+        
         super.doGetRequest((data)=>{
+            console.log("Succesfully retrieved data");
             sb(data);
         },(data)=>{
+            console.log("Error while retrieving data");
             eb(data);
         },options);
     }
