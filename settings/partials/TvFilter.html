@@ -1,0 +1,24 @@
+<h1>Programma overzicht</h1>
+
+<div ng-repeat="program in programs track by db_id">
+    <div class="">
+        <span>{{program.datum_start}}</span>
+        <span>{{program.titel}}</span>
+        <span></span>
+    </div>
+</div>
+
+
+
+<h1>Gekozen programma's</h1>
+
+<ul>
+    <li ng-repeat="program in watchedPrograms track by db_id">
+        <span>{{program.datum_start}}</span>
+        <span>{{program.titel}}</span>
+        <span>{{program.channel}}</span>
+        <span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+    </li>
+</ul>
+
+<span class="btn btn-default">Remove All</span>

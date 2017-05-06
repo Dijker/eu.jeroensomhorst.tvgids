@@ -8,8 +8,6 @@ class TvGidsApi extends HttpApi{
     constructor(){
        super();
        this._hostname = "www.tvgids.nl";
-       this._channelCache = null;
-       this._channelIds = [];
     }
     
     /**
@@ -23,47 +21,20 @@ class TvGidsApi extends HttpApi{
      */
 
     getProgramsFromTime(channel, offset, sb, eb){
-        console.log("Retrieve programs from channel and specific time");
-        console.log("Channel :"+channel)
-        console.log("Offset :"+offset)
-        
+        console.log("Get programs primetime");
         var channels = channel;
         if(typeof channel  != 'string'){
             channels = channel.join(',');
         }
 
         var options = this.generateOptions('/json/lists/nustraks.php',['channels',channels,'day',offset]);
-        
-        super.doGetRequest((data)=>{
-            console.log(data);
-            sb(data);
-        },(data)=>{
-            console.log("Error");
-            eb(data);
-        },options);
+        super.doGetRequest(sb,eb,options);
     }
 
     getChannels(sb, eb){
-     if(this._channelCache == null){
+        console.log("get channels");
         var options = this.generateOptions("/json/lists/channels.php",[]);
-        super.doGetRequest((data)=>{
-            this._channelCache = data;
-            this._channelCache.forEach((value)=>{
-                this._channelIds.push(value.id);
-            });
-
-            sb(data);
-        },(data)=>{
-            this._channelCache = null;
-            console.log("error ");
-            eb(data);
-        },options);
-
-     }else{
-         console.log( "Get data from cache");
-         sb(this._channelCache);
-     }
-      
+        super.doGetRequest(sb,eb,options);     
     }
 
 
@@ -80,6 +51,7 @@ class TvGidsApi extends HttpApi{
 
 
     getPrograms(channel,offset,sb,eb){
+        console.log("Retrieve programs");
         var args = [];
 
         
@@ -97,14 +69,7 @@ class TvGidsApi extends HttpApi{
         }
 
         var options = this.generateOptions("/json/lists/programs.php",args);
-        
-        super.doGetRequest((data)=>{
-            console.log("Succesfully retrieved data");
-            sb(data);
-        },(data)=>{
-            console.log("Error while retrieving data");
-            eb(data);
-        },options);
+        super.doGetRequest(sb,eb,options);
     }
 
 
