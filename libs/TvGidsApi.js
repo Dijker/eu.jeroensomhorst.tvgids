@@ -66,9 +66,13 @@ class TvGidsApi extends HttpApi{
         if(offset != null){
             args.push("day");
             args.push(offset);
+        }else{
+            args.push("day");
+            args.push("0");
         }
 
         var options = this.generateOptions("/json/lists/programs.php",args);
+        console.log("options");
         super.doGetRequest(sb,eb,options);
     }
 

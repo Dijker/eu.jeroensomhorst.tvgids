@@ -1,1 +1,1 @@
-angular.module( 'TvGuide',['TvGuideServices','TvGuideDirectives','TvGuideControllers'])
+angular.module( 'TvGuide',['TvGuideServices','TvGuideDirectives','TvGuideControllers','ui.bootstrap'])

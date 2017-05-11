@@ -1,1 +1,22 @@
-{}
+{
+    "weekDayArray": ["zondag","maandag","dinsdag","woensdagy","donderdag","vrijdag","zaterdag"],
+    "settings": {
+        
+        "column": {
+            "title": "Titel",
+            "date_start": "Start",
+            "date_end": "Einde",
+            "watchlist": "Favoriet"
+        },
+        "tabs": {
+            "mapping": {
+                "title": "Kanaal mapping",
+                "description": "Op deze pagina kun je aangeven welk kanaal gebruikt wordt voor welke zender"
+            },
+            "favorites": {
+                "title": "Favorieten",
+                "description": "Hier kun je selecteren welke programma's beschikbaar zijn in flows"
+            } 
+        }
+    }
+}

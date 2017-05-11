@@ -1,2 +1,39 @@
-<select ng-model="day" ng-options="d for d in days"></select>
-<select ng-model="channel" ng-options="c.name for c in channels track by c.id"></select>
+<style>
+    .watchListColumn{
+        text-align: center;
+    }
+
+    th{
+        text-align: left;
+    }
+
+    td{
+        text-align: left;
+    }
+
+</style>
+
+
+<div data-ng-show="programs != null && watchlist != null">
+
+<table class="table table-bordered" >
+    <thead>
+        <tr>
+            <th data-i18n='settings.column.title'>Titel</th>
+            <th data-i18n='settings.column.date_start'>Start</th>
+            <th data-i18n='settings.column.date_end'>Eind</th>
+            <th data-i18n='settings.column.watchlist' class="watchListColumn">Watch</th>
+        </tr>
+    </thead>
+    <tbody data-ng-repeat="program in programs">
+        <tr data-ng-repeat="entry in program track by entry.db_id" data-ng-click="onProgramClick(entry)" style="cursor:pointer">
+            <td><span>{{entry.titel}}</span></td>
+            <td><span>{{entry.datum_start | limitTo : -8}}</span></td>
+            <td><span>{{entry.datum_end | limitTo : -8}}</span></td>
+            <td class="watchListColumn"><span><i class="{{entry.db_id | onWatchList:watchlist}}" aria-hidden="true"></i></span></td>
+        </tr>
+    </tbody>
+</table>
+
+
+</div>

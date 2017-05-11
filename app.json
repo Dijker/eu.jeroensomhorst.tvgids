@@ -55,7 +55,7 @@
                 },
                 {
                     "name": "name",
-                    "type": "text",
+                    "type": "autocomplete",
                     "placeholder": {
                         "en": "Program contains following text",
                         "nl": "Programma naam bevat de tekst"

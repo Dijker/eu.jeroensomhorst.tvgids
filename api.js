@@ -56,7 +56,6 @@ module.exports = [
             console.log('Putting new value');
             console.log(args);
             console.log('get value from settings');
-            Homey.manager('settings').unset('watchlist');
             var value = Homey.manager('settings').get('watchlist');
             console.log(value);
             if(value == null){ // settings found yet
@@ -72,9 +71,8 @@ module.exports = [
                 
                 Homey.manager('settings').set('watchlist',value);
             }
-
-            callback(false);
-
+            var watchlist = Homey.manager('settings') .get('watchlist');
+            callback(null,watchlist);
         }
     },{
         description: "Remove a program from the watch list",
@@ -87,9 +85,11 @@ module.exports = [
                 if(value != null){
                     delete value[args.query.id];
                     Homey.manager('settings').set('watchlist',value);
-                    callback(true);
+                    var watchlist = Homey.manager('settings') .get('watchlist');
                 }
+                callback(null,watchlist);
             }
+            callback(null,false);
         }
     }
 ]

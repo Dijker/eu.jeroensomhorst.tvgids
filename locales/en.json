@@ -1,1 +1,22 @@
-{}
+{
+    "weekDayArray": ["sunday","monday","thuesday","wednesday","thursday","friday","saturday"],
+    "settings": {
+        
+        "column": {
+            "title": "Title",
+            "date_start": "Start",
+            "date_end": "End",
+            "watchlist": "Favorite"
+        },
+        "tabs": {
+            "mapping": {
+                "title": "Channel mapping",
+                "description": "On this page you can define which tv channel corresponds to a tv station"
+            },
+            "favorites": {
+                "title": "Favorites",
+                "description": "On this page you can select which program's are available in flows"
+            } 
+        }
+    }
+}
