@@ -49,6 +49,74 @@ module.exports = [
         }   
     },
     {
+        description: "Get the current channel mapping",
+        method: "GET",
+        path: "/mapping", 
+        fn: (callback,args)=>{
+            var currentMapping = Homey.manager('settings').get('channelmapping');
+            if(currentMapping == null){
+                Homey.manager('settings').set('channelmapping',[]);
+            }
+            var mapping = Homey.manager('settings').get('channelmapping');
+            callback(null,mapping);
+        }
+    },
+    {
+        description: "Add a channel mapping",
+        method: "PUT",
+        path: "/mapping",
+        fn: (callback,args)=>{
+            console.log("Putting new channel mapping");
+            console.log(args);
+            var value = Homey.manager('settings').get('channelmapping');
+            if(value == null){
+                value = [];
+            }else{
+                var newValue = [];
+                for(var i = 0; i < value.length;i++){
+                    var entry = value[i];
+                    if(entry.id != args.body.id){
+                        newValue.push(entry);
+                    }
+                }
+                value = newValue;
+            }
+            
+
+            value.push(args.body);
+
+            Homey.manager('settings').set('channelmapping',value);
+            callback(null,Homey.manager('settings').get('channelmapping'));
+        }
+    },
+    {
+        description: "Remove a channel mapping",
+        method: "DELETE",
+        path: "/mapping",
+        fn: (callback,args)=>{
+            var channelmapping = Homey.manager('settings').get('channelmapping');
+            if(channelmapping != null && channelmapping != []){
+                if(args.query.hasOwnProperty('id')){
+                    var newMapping = [];
+                    for(var i = 0; i < channelmapping.length;i++){
+                        var entry = channelmapping[i];
+                        if(entry.id != args.query.id){
+                            newMapping.push(entry);
+                        }
+                    }
+
+                    Homey.manager('settings').set('channelmapping',newMapping);
+
+                }else{
+                    Homey.manager('settings').set('channelmapping',[]);
+                }
+            }
+            var mapping = Homey.manager('settings').get('channelmapping');
+            callback(null,mapping);
+            
+        }
+    },
+    {
         description: "Add a program to the watch list",
         method: "PUT",
         path: "/watch",
@@ -88,6 +156,10 @@ module.exports = [
                     var watchlist = Homey.manager('settings') .get('watchlist');
                 }
                 callback(null,watchlist);
+            }else{
+               Homey.manager('settings').set('watchlist',{});
+               var watchlist = Homey.manager('settings') .get('watchlist');
+               callback(null,watchlist);
             }
             callback(null,false);
         }

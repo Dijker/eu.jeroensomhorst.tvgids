@@ -1,7 +1,10 @@
 {
     "weekDayArray": ["zondag","maandag","dinsdag","woensdagy","donderdag","vrijdag","zaterdag"],
     "settings": {
-        
+        "watchlist": {
+            "removeWarning": "Weet u zeker dat u uw favorieten wilt verwijderen?",
+            "removebutton": "Verwijder alle favorieten"
+        },
         "column": {
             "title": "Titel",
             "date_start": "Start",

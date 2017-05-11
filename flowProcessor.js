@@ -53,31 +53,60 @@ class flowProcessor{
     parseChannelData(){
         var watchlist = Homey.manager('settings').get('watchlist');
         if(watchlist != null){
-             var currentDate = new Date();
+            var currentDate = new Date();
             currentDate.setSeconds(0);
             currentDate.setMilliseconds(0);
 
             for(var property in watchlist){
                 var value = watchlist[property];
+               
+
                 var startDate = new Date(value.datum_start);
                 startDate.setSeconds(0);
                 startDate.setMilliseconds(0);
                 if(currentDate <= startDate){ // if currentdate is before or on the startdate of the program
-                    this.manager.trigger('program_start',{},{
+                    this.manager.trigger('program_start',{
+                        channel: getMappedChannel(value.channel),
+                        title: value.titel
+                    },{
                         "programdata": value
                     });
                 }
+
             }
         }
     }
 
+    getMappedChannel(channel){
+        console.log("Get mapped channel for: "+channel);
+        var channelMapping = Homey.manager('settings').get('channelmapping');
+        var mapping = channel;
+        if(channelMapping != null){
+            
+            for(var i = 0; i < channelMapping.length;i++){
+                var entry = channelMapping[i];
+                if(entry.id == channel){
+                    mapping = entry.tvchannel;
+                }
+            }
+        }
+        console.log("Return");
+        console.log(mapping);
+        return mapping;
+    }
+
+
     onTrigger(callback,args,state){
+        console.log('Triggering"');
+        console.log(args);
+        console.log(state);
+
+
         var args = args.name;
         var programData = state.programdata;
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
         var name = args.name;
         var id = args.id;
-
         if(programData.db_id == id){ // its the same
             console.log("We found something we should take a look at");
             console.log(programData);

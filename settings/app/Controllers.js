@@ -1,6 +1,7 @@
 angular.module('TvGuideControllers', ['TvGuideServices'])
 .controller('MainController',['$scope','TvGuideService',function($scope,service){
     $scope.resourceBundle = i18n.getResourceBundle(i18n.lng());
+    $scope.active = 1;
 
     service.getChannels().then(function(data){
         console.log("Retrieved channel data");
@@ -9,14 +10,14 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
         console.log('Error while retrieving channel data!!!');
     })
 }])
-.controller('ChannelMappingController',['$scope','SettingService','TvGuideService',function($scope,settings,service){
+.controller('ChannelMappingController',['$scope','channelMappingService','TvGuideService',function($scope,settings,service){
    
     $scope.onMappingChange = function(c){
-        
+        settings.add(c);
     }
 
 }])
-.controller('FilterController',['$scope','SettingService','TvGuideService',function($scope,settings,service){
+.controller('FilterController',['$scope','$window','SettingService','TvGuideService',function($scope,$window,settings,service){
 
     $scope.days = [];
     
@@ -46,7 +47,15 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
     }
 
 
-
+    $scope.onRemoveWatchlist = function(){
+        if($window.confirm($scope.resourceBundle.settings.watchlist.removeWarning)){
+            settings.removeAll().then(function(data){
+                $scope.watchlist = data;
+            },function(data){
+                console.log("Could not remove all from watchlist");
+            });
+        }
+    }
 
 }])
 .controller('GridController',['$scope','SettingService','TvGuideService',function($scope,service,tvGuide){
@@ -90,8 +99,6 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
                 console.log("error");
             });
         }
-
-
     }
 
     service.get().then(function(data){

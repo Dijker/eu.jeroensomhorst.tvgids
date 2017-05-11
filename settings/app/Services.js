@@ -1,9 +1,26 @@
 angular.module('TvGuideServices',[])
 .factory('channelMappingService',['$http','$q',function($http,$q){
     var s = {};
-    s.baseUrl = 'api/app/eu.jeroensomhorst.tvgids/mapping';
-    s.get = function(){}
-    s.add = function(data){}
+    s.baseUrl = '/api/app/eu.jeroensomhorst.tvgids/mapping';
+    s.get = function(){
+        var def = $q.defer();
+        $http.get(this.baseUrl).then(function(data){
+            def.resolve(data);
+        },function(data){
+            def.reject(data);
+        });
+        return def.promise;
+    }
+    s.add = function(data){
+       var def = $q.defer();
+        $http.put(this.baseUrl,data).then(function(data){
+            def.resolve(data.data);
+        },function(data){
+            def.reject(data);
+        });
+        return def.promise;
+    }
+    return s;
 }])
 .factory('SettingService',['$http','$q',function($http,$q){
 
@@ -32,13 +49,21 @@ angular.module('TvGuideServices',[])
     
     s.remove = function(id){
         var def = $q.defer();
-        var url = this.baseUrl+"?id="+id;
+        var url = this.baseUrl
+        if(id != null){
+            url +="?id="+id;
+        }
+
         $http.delete(url).then(function(data){
             def.resolve(data.data);
         },function(data){
             def.reject(data.data);
         });
         return def.promise;
+    }
+
+    s.removeAll = function(){
+        return this.remove(null);
     }
 
     return s;

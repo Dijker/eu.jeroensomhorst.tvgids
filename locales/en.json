@@ -1,7 +1,10 @@
 {
     "weekDayArray": ["sunday","monday","thuesday","wednesday","thursday","friday","saturday"],
     "settings": {
-        
+        "watchlist": {
+            "removeWarning": "Are you sure you want to remove youre favorites?",
+            "removebutton": "Remove all favorites"
+        },
         "column": {
             "title": "Title",
             "date_start": "Start",
