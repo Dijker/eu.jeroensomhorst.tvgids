@@ -74,7 +74,7 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
 
 
     $scope.onProgramClick = function(entry){
-
+        
         if($scope.watchlist.result.hasOwnProperty(entry.db_id)){
             service.remove(entry.db_id).then(function(data){
                 $scope.watchlist = data;
@@ -82,6 +82,8 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
                 console.log('fout');
             });
         }else{
+            entry.channel = $scope.channel.id;
+
             service.add(entry).then(function(data){
                 $scope.watchlist = data;
             },function(data){
