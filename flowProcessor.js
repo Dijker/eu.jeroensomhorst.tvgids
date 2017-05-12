@@ -10,6 +10,7 @@ class flowProcessor{
 	
     init(){
         this.manager.on('trigger.program_start',(callback,args,state)=> {this.onTrigger(callback,args,state)});
+        this.manager.on("trigger.anny_program_start",(callback,args,state)=>{this.onTrigger(callback,args,state)});
         this.manager.on('trigger.program_start.name.autocomplete',(callback,args)=>{this.programAutoComplete(callback,args)});
         this.parseChannelData(); // trigger it on load
         setInterval(()=>{this.parseChannelData()},60000); //  every minute check if we need to trigger things
@@ -69,12 +70,16 @@ class flowProcessor{
                 startDate.setMilliseconds(0);
                 
                 if(currentDate <= startDate){ // if currentdate is before or on the startdate of the program
-                    this.manager.trigger('program_start',{
+                    var state = {
                         channel: this.getMappedChannel(value.channel),
                         title: value.titel
-                    },{
+                    };
+                    var args = {
                         "programdata": value
-                    });
+                    };
+                    
+                    this.manager.trigger('program_start',state,args);
+                    this.manager.trigger('anny_program_start',state,args);
                 }
 
             }
@@ -119,7 +124,6 @@ class flowProcessor{
             console.log(startDate);            
 
             if(currentDate.getTime() == startDate.getTime()){
-                console.log("Program has triggered");
                 callback(null,true);
             }else{            
                 callback(null,false);

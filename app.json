@@ -20,10 +20,75 @@
     },
     "flow": {
         "triggers": [{
+            "id": "anny_program_start", 
+            "title": {
+                "en": "A favorite program starts",
+                "nl": "Een favoriet programma start"
+            },
+            "tokens":[
+                {
+                    "name": "title",
+                    "type": "string",
+                    "title": {
+                        "en": "Titel",
+                        "nl": "Titel"
+                    },
+                    "example": "Pingu"
+                },
+                {
+                    "name": "channel",
+                    "type": "string",
+                    "title": {
+                        "en": "Channel",
+                        "nl": "Kanaal"
+                    },
+                    "example": {
+                        "en": "NPO 1",
+                        "nl": "NPO 1"
+                    }
+                }
+            ],
+            "args":[
+                {
+                    "name": "offset",
+                    "type": "dropdown",
+                    "values": [
+                        {
+                            "id": "0",
+                            "label": {
+                                "en": "0 minutes",
+                                "nl": "0 minutes"
+                            }
+                        },
+                        {
+                            "id": "5",
+                            "label": {
+                                "en": "5 minutes",
+                                "nl": "5 minuten"
+                            }
+                        },
+                        {
+                            "id": "10",
+                            "label": {
+                                "en": "10 minutes",
+                                "nl": "10 minuten"
+                            }
+                        },
+                        {
+                            "id": "15",
+                            "label": {
+                                "en": "15 minutes",
+                                "nl": "15 minuten"
+                            }
+                        }
+                    ]
+                }]
+        },
+            {
             "id": "program_start", 
             "title": {
-                "en": "A program starts",
-                "nl": "Een programma start"
+                "en": "The following program starts",
+                "nl": "Het volgende programma begint"
             },
             "tokens":[
                 {
