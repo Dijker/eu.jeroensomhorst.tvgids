@@ -23,7 +23,8 @@ action column to switch to the correct channel!
 
 ##Triggers
 
-- Add a trigger that specifies which of your favorites Homey should keep an eye on. Specify the offset ( in minutes )
+- Add a trigger that specifies which of your favorites Homey should keep an eye on. Specify the offset ( in minutes ) and the progranm you have added to your favorite.
+  The trigger has tokens for the Title and the channel. This channel is changed to the mapped channel when a mapping has been set.
 
 ##Conditions
 
