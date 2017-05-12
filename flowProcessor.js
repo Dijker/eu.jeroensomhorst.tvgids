@@ -97,12 +97,12 @@ class flowProcessor{
     }
 
     onTrigger(callback,args,state){
-        console.log("Trigger!!");
         var programData = state.programdata;
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
         var program = args.name;
         var id = program.id;
         if(programData.db_id == id){ // its the same
+            console.log("trigger");
             var startDate = new Date(programData.datum_start);
             startDate.setSeconds(0);
             startDate.setMilliseconds(0);
@@ -118,7 +118,7 @@ class flowProcessor{
             console.log(currentDate);
             console.log(startDate);            
 
-            if(currentDate.getHours() == startDate.getHours() && currentDate.getMinutes() == startDate.getMinutes()){
+            if(currentDate.getTime() == startDate.getTime()){
                 console.log("Program has triggered");
                 callback(null,true);
             }else{            
