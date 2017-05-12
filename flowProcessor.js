@@ -11,7 +11,8 @@ class flowProcessor{
     init(){
         this.manager.on('trigger.program_start',(callback,args,state)=> {this.onTrigger(callback,args,state)});
         this.manager.on('trigger.program_start.name.autocomplete',(callback,args)=>{this.programAutoComplete(callback,args)});
-        setInterval(()=>{this.parseChannelData()},2000); //  every 5 seconds check if we need to trigger things
+        this.parseChannelData(); // trigger it on load
+        setInterval(()=>{this.parseChannelData()},60000); //  every minute check if we need to trigger things
     }
 
     programAutoComplete(callback,args){
@@ -54,6 +55,7 @@ class flowProcessor{
     parseChannelData(){
         var watchlist = Homey.manager('settings').get('watchlist');
         if(watchlist != null){
+            console.log("Validate watchlist");
             var currentDate = new Date();
             currentDate.setSeconds(0);
             currentDate.setMilliseconds(0);
@@ -95,12 +97,12 @@ class flowProcessor{
     }
 
     onTrigger(callback,args,state){
+        console.log("Trigger!!");
         var programData = state.programdata;
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
         var program = args.name;
         var id = program.id;
         if(programData.db_id == id){ // its the same
-            console.log("We need to validate something..");
             var startDate = new Date(programData.datum_start);
             startDate.setSeconds(0);
             startDate.setMilliseconds(0);
@@ -111,14 +113,15 @@ class flowProcessor{
             
 
             var currentDate = new Date();
+            currentDate.setSeconds(0);
             currentDate.setMilliseconds(0);
-            
+            console.log(currentDate);
+            console.log(startDate);            
 
-            if(currentDate.getTime() == startDate.getTime()){
-                console.log("We need to trigger");
+            if(currentDate.getHours() == startDate.getHours() && currentDate.getMinutes() == startDate.getMinutes()){
+                console.log("Program has triggered");
                 callback(null,true);
-            }else{
-                console.log("We dont need to trigger it");
+            }else{            
                 callback(null,false);
             }
         }
