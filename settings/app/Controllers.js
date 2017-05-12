@@ -4,10 +4,9 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
     $scope.active = 1;
 
     service.getChannels().then(function(data){
-        console.log("Retrieved channel data");
         $scope.channels = data.result;
     },function(data){
-        console.log('Error while retrieving channel data!!!');
+        
     })
 }])
 .controller('ChannelMappingController',['$scope','channelMappingService','TvGuideService',function($scope,settings,service){
@@ -52,7 +51,7 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
             settings.removeAll().then(function(data){
                 $scope.watchlist = data;
             },function(data){
-                console.log("Could not remove all from watchlist");
+                
             });
         }
     }
@@ -88,7 +87,7 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
             service.remove(entry.db_id).then(function(data){
                 $scope.watchlist = data;
             },function(data){
-                console.log('fout');
+                
             });
         }else{
             entry.channel = $scope.channel.id;
@@ -96,7 +95,7 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
             service.add(entry).then(function(data){
                 $scope.watchlist = data;
             },function(data){
-                console.log("error");
+                
             });
         }
     }
@@ -104,7 +103,7 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
     service.get().then(function(data){
         $scope.watchlist = data;
     },function(data){
-        console.log("Error while retrieving data");
+        
     });
 }])
 .filter('onWatchList',function(){
@@ -119,4 +118,15 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
         }catch(e){}
         return styleClass;
     }
-});
+})
+.controller('FavoriteController',['$scope','SettingService',function($scope,service){
+   
+    $scope.removeFavorite = function(id){
+        service.remove(id).then(function(data){
+            $scope.watchlist = data;
+        },function(data){
+        });
+    }
+
+
+}]);

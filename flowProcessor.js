@@ -1,7 +1,6 @@
 "use strict"
 const api = require('./libs/TvGidsApi');
 
-
 class flowProcessor{
     constructor(){
         this.api = new api();
@@ -12,7 +11,7 @@ class flowProcessor{
     init(){
         this.manager.on('trigger.program_start',(callback,args,state)=> {this.onTrigger(callback,args,state)});
         this.manager.on('trigger.program_start.name.autocomplete',(callback,args)=>{this.programAutoComplete(callback,args)});
-        setInterval(()=>{this.parseChannelData()},5000); //  every 30 seconds check if we need to trigger things
+        setInterval(()=>{this.parseChannelData()},2000); //  every 5 seconds check if we need to trigger things
     }
 
     programAutoComplete(callback,args){
@@ -49,7 +48,9 @@ class flowProcessor{
         callback(null,returnValue);
     }
 
-
+    /**
+     * @TODO When a programn already has been cast remove it from the watchlist?
+     */
     parseChannelData(){
         var watchlist = Homey.manager('settings').get('watchlist');
         if(watchlist != null){
@@ -64,9 +65,10 @@ class flowProcessor{
                 var startDate = new Date(value.datum_start);
                 startDate.setSeconds(0);
                 startDate.setMilliseconds(0);
+                
                 if(currentDate <= startDate){ // if currentdate is before or on the startdate of the program
                     this.manager.trigger('program_start',{
-                        channel: getMappedChannel(value.channel),
+                        channel: this.getMappedChannel(value.channel),
                         title: value.titel
                     },{
                         "programdata": value
@@ -78,7 +80,6 @@ class flowProcessor{
     }
 
     getMappedChannel(channel){
-        console.log("Get mapped channel for: "+channel);
         var channelMapping = Homey.manager('settings').get('channelmapping');
         var mapping = channel;
         if(channelMapping != null){
@@ -90,36 +91,34 @@ class flowProcessor{
                 }
             }
         }
-        console.log("Return");
-        console.log(mapping);
         return mapping;
     }
 
-
     onTrigger(callback,args,state){
-        console.log('Triggering"');
-        console.log(args);
-        console.log(state);
-
-
-        var args = args.name;
         var programData = state.programdata;
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
-        var name = args.name;
-        var id = args.id;
+        var program = args.name;
+        var id = program.id;
         if(programData.db_id == id){ // its the same
-            console.log("We found something we should take a look at");
-            console.log(programData);
+            console.log("We need to validate something..");
             var startDate = new Date(programData.datum_start);
-            var newStartDate = startDate.getTime()-offset;
-            startDate.setTime(newStartDate);
+            startDate.setSeconds(0);
+            startDate.setMilliseconds(0);
+            var time = startDate.getTime() - offset;
+
+            startDate.setTime(time);
+
+            
 
             var currentDate = new Date();
-            currentDate.setSeconds(0);
             currentDate.setMilliseconds(0);
+            
+
             if(currentDate.getTime() == startDate.getTime()){
+                console.log("We need to trigger");
                 callback(null,true);
             }else{
+                console.log("We dont need to trigger it");
                 callback(null,false);
             }
         }

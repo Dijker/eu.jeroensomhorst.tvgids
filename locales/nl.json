@@ -12,13 +12,18 @@
             "watchlist": "Favoriet"
         },
         "tabs": {
+            "tvguide": {
+                "title": "Programma gids",
+                "description": "Op deze pagina kun je programmas toevoegen aan uw favorieten om te gebruiken in flows"
+            },
             "mapping": {
                 "title": "Kanaal mapping",
                 "description": "Op deze pagina kun je aangeven welk kanaal gebruikt wordt voor welke zender"
             },
             "favorites": {
                 "title": "Favorieten",
-                "description": "Hier kun je selecteren welke programma's beschikbaar zijn in flows"
+                "description": "Op deze pagina vind je een overzicht van al je favorieten. Deze kun je hier verwijderen.",
+                "no_results": "Geen resultaten"
             } 
         }
     }

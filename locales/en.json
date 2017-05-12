@@ -12,13 +12,18 @@
             "watchlist": "Favorite"
         },
         "tabs": {
+            "tvguide": {
+                "title": "TV Guide",
+                "description": "On this page you can define which tv channel corresponds to a tv station"
+            },
             "mapping": {
                 "title": "Channel mapping",
                 "description": "On this page you can define which tv channel corresponds to a tv station"
             },
             "favorites": {
                 "title": "Favorites",
-                "description": "On this page you can select which program's are available in flows"
+                "description": "On this page you can see all programs you have added to your favorites in the past. You can remove them here.",
+                "no_results": "No results"
             } 
         }
     }

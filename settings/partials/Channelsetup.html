@@ -1,7 +1,7 @@
 <div>
     <p>{{resourceBundle.settings.tabs.mapping.description}}</p>
     <table class="table table-condensed">
-        <tr ng-repeat="c in channels track by c.id">
+        <tr ng-repeat="c in channels track by c.id | orderBy: 'name'">
             <td>{{c.name}}</td>
             <td><input type="number" placeholder="0" ng-model="c.tvchannel" ng-change="onMappingChange(c)" /></td>
         </tr>

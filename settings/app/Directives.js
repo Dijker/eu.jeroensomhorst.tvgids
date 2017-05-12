@@ -18,9 +18,15 @@ angular.module('TvGuideDirectives',['TvGuideControllers'])
         templateUrl: 'partials/Channelsetup.html',
         controller: 'ChannelMappingController'
     }
-}).directive('favorites',function(){
+}).directive('tvguide',function(){
+    return {
+        restrict: 'A',
+        templateUrl: 'partials/TvGuide.html',
+    }
+}).directive('favoriteList',function(){
     return {
         restrict: 'A',
         templateUrl: 'partials/Favorites.html',
+        controller: 'FavoriteController'
     }
 });

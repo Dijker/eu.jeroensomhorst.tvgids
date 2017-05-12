@@ -21,7 +21,6 @@ class TvGidsApi extends HttpApi{
      */
 
     getProgramsFromTime(channel, offset, sb, eb){
-        console.log("Get programs primetime");
         var channels = channel;
         if(typeof channel  != 'string'){
             channels = channel.join(',');
@@ -32,7 +31,6 @@ class TvGidsApi extends HttpApi{
     }
 
     getChannels(sb, eb){
-        console.log("get channels");
         var options = this.generateOptions("/json/lists/channels.php",[]);
         super.doGetRequest(sb,eb,options);     
     }
@@ -51,12 +49,10 @@ class TvGidsApi extends HttpApi{
 
 
     getPrograms(channel,offset,sb,eb){
-        console.log("Retrieve programs");
         var args = [];
 
         
         args.push("channels");
-        console.log(typeof channel);
         if(typeof channel === 'string'){
             args.push(channel);
         }else{ // we asume it's an array
@@ -72,7 +68,6 @@ class TvGidsApi extends HttpApi{
         }
 
         var options = this.generateOptions("/json/lists/programs.php",args);
-        console.log("options");
         super.doGetRequest(sb,eb,options);
     }
 

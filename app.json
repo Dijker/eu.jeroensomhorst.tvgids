@@ -54,6 +54,13 @@
                     "type": "dropdown",
                     "values": [
                         {
+                            "id": "0",
+                            "label": {
+                                "en": "0 minutes",
+                                "nl": "0 minutes"
+                            }
+                        },
+                        {
                             "id": "5",
                             "label": {
                                 "en": "5 minutes",

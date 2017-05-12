@@ -8,13 +8,10 @@ module.exports = [
         method: "GET",
         path: "/channels",
         fn: (callback,args)=>{
-            console.log("Get available channels");
             var p = new api();
             p.getChannels(function(data){
-                console.log("Succesfully retrieved channel data");
                 callback(null,JSON.parse(data));
             },function(data){
-                console.log("Error while retrieving data");
                 callback(data,null);
             });
         }
@@ -24,7 +21,6 @@ module.exports = [
         method: "GET",
         path:  "/programs",
         fn: (callback,args)=>{
-            console.log("Request for program retrieval!!");
             var p = new api();
             if(args.query.hasOwnProperty('channels')){
                 var offset = args.query.hasOwnProperty('offset') ? args.query.offset : 0;
@@ -66,8 +62,6 @@ module.exports = [
         method: "PUT",
         path: "/mapping",
         fn: (callback,args)=>{
-            console.log("Putting new channel mapping");
-            console.log(args);
             var value = Homey.manager('settings').get('channelmapping');
             if(value == null){
                 value = [];
@@ -121,18 +115,13 @@ module.exports = [
         method: "PUT",
         path: "/watch",
         fn: (callback,args)=>{
-            console.log('Putting new value');
-            console.log(args);
-            console.log('get value from settings');
             var value = Homey.manager('settings').get('watchlist');
-            console.log(value);
+            
             if(value == null){ // settings found yet
-                console.log('No value in settings create new value');
                 value = {};
             }
             
             if(args.body.hasOwnProperty('db_id')){ // body seems to be correct
-                console.log("")
                 if(!value.hasOwnProperty(args.body.db_id)){
                     value[args.body.db_id] = args.body;
                 }
