@@ -25,12 +25,16 @@ action column to switch to the correct channel!
 
 - Add a trigger that specifies which of your favorites Homey should keep an eye on. Specify the offset ( in minutes ) and the progranm you have added to your favorite.
   The trigger has tokens for the Title and the channel. This channel is changed to the mapped channel when a mapping has been set.
+- Add a trigger that will be executed whenever a favorite is about to begin. This can be used if you don't want to change your flows all the time.
 
 ##Conditions
 
 ##Actions
 
 ## Changelog
+
+0.0.2
+* Added trigger to work on any favorite. This can be used as a general trigger if you don't want to change your flows all the time.
 
 0.0.1
 * Initial release
