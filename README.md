@@ -33,6 +33,9 @@ action column to switch to the correct channel!
 
 ## Changelog
 
+0.0.4
+* Removed the single favorite watch card because it was buggy ;)
+
 0.0.3
 * Fixed an issue that caused the mapping not to be shown to the user after it was stored.
 
