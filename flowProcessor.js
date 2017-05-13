@@ -9,8 +9,8 @@ class flowProcessor{
     }
 	
     init(){
-        this.manager.on('trigger.program_start',(callback,args,state)=> {this.onTrigger(callback,args,state)});
-        this.manager.on("trigger.anny_program_start",(callback,args,state)=>{this.onTrigger(callback,args,state)});
+        this.manager.on('trigger.program_start',(callback,args,state)=> {this.onProgramStartTriggerTrigger(callback,args,state)});
+        this.manager.on("trigger.any_program_start",(callback,args,state)=>{this.onAnyProgramStartTrigger(callback,args,state)});
         this.manager.on('trigger.program_start.name.autocomplete',(callback,args)=>{this.programAutoComplete(callback,args)});
         this.parseChannelData(); // trigger it on load
         setInterval(()=>{this.parseChannelData()},60000); //  every minute check if we need to trigger things
@@ -54,9 +54,9 @@ class flowProcessor{
      * @TODO When a programn already has been cast remove it from the watchlist?
      */
     parseChannelData(){
+        console.log("Validate watchlist");
         var watchlist = Homey.manager('settings').get('watchlist');
         if(watchlist != null){
-            console.log("Validate watchlist");
             var currentDate = new Date();
             currentDate.setSeconds(0);
             currentDate.setMilliseconds(0);
@@ -70,6 +70,7 @@ class flowProcessor{
                 startDate.setMilliseconds(0);
                 
                 if(currentDate <= startDate){ // if currentdate is before or on the startdate of the program
+                    console.log("Validate triggers");
                     var state = {
                         channel: this.getMappedChannel(value.channel),
                         title: value.titel
@@ -79,7 +80,7 @@ class flowProcessor{
                     };
                     
                     this.manager.trigger('program_start',state,args);
-                    this.manager.trigger('anny_program_start',state,args);
+                    this.manager.trigger('any_program_start',state,args);
                 }
 
             }
@@ -101,7 +102,12 @@ class flowProcessor{
         return mapping;
     }
 
-    onTrigger(callback,args,state){
+
+    onProgramStartTriggerTrigger(callback,args,state){
+        console.log("On program start trigger");
+        console.log(args);
+        console.log(state);
+
         var programData = state.programdata;
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
         var program = args.name;
@@ -128,6 +134,36 @@ class flowProcessor{
             }else{            
                 callback(null,false);
             }
+        }
+  
+    }
+
+    onAnyProgramStartTrigger(callback,args,state){
+        console.log("On any program start trigger");
+        console.log(args);
+        console.log(state);
+
+        var programData = state.programdata;
+        var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
+        var startDate = new Date(programData.datum_start);
+        startDate.setSeconds(0);
+        startDate.setMilliseconds(0);
+        var time = startDate.getTime() - offset;
+
+        startDate.setTime(time);
+
+        
+
+        var currentDate = new Date();
+        currentDate.setSeconds(0);
+        currentDate.setMilliseconds(0);
+        console.log(currentDate);
+        console.log(startDate);            
+
+        if(currentDate.getTime() == startDate.getTime()){
+            callback(null,true);
+        }else{            
+            callback(null,false);
         }
   
     }
