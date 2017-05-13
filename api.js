@@ -39,9 +39,12 @@ module.exports = [
         path: "/watch",
         fn: (callback,args)=>{
             var value = Homey.manager('settings').get( 'watchlist' );
-            if(value != null){
-                callback(null,value); // return as plain text;
+            if(value == null){
+                Homey.manager('settings').set('watchlist',{});
             }
+
+            var value = Homey.manager('settings').get('watchlist');
+            callback(null,value);
         }   
     },
     {
