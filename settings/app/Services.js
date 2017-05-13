@@ -4,8 +4,9 @@ angular.module('TvGuideServices',[])
     s.baseUrl = '/api/app/eu.jeroensomhorst.tvgids/mapping';
     s.get = function(){
         var def = $q.defer();
+        var self =this;
         $http.get(this.baseUrl).then(function(data){
-            def.resolve(data);
+            def.resolve(data.data);
         },function(data){
             def.reject(data);
         });

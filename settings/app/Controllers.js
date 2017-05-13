@@ -7,13 +7,57 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
         $scope.channels = data.result;
     },function(data){
         
-    })
+    });
+
+
+
+    $scope.tvGuideSelected = function(){}
 }])
 .controller('ChannelMappingController',['$scope','channelMappingService','TvGuideService',function($scope,settings,service){
-   
-    $scope.onMappingChange = function(c){
-        settings.add(c);
+
+   var mixMappingWithChannel = function(mapping,channel){
+        var m = new Map();
+        mapping.forEach(function(value){
+            m.set(value.id,value.tvchannel);
+        });
+
+        for(var i= 0;i < channel.length;i++){
+            var entry = channel[i];
+            var id = entry.id;
+            if(m.has(id)){
+                entry.tvchannel = m.get(id);
+            }
+        }
+   }
+
+
+   $scope.mappingSelect = function(){
+       console.log("mapping select");
+       debugger;
+       if($scope.mappings != null && $scope.channels != null){
+           mixMappingWithChannel($scope.mappings,$scope.channels);
+           debugger;
+       }
+   }
+
+   $scope.$watch('mappings',function(n,o){
+    if(n != null && $scope.channels != null){
+        mixMappingWithChannel(n,$scope.channels);
     }
+   });
+
+    $scope.onMappingChange = function(c){
+        settings.add(c).then(function(data){
+            $scope.mappings = data.result;
+        },function(data){});;
+    };
+
+    settings.get().then(function(data){
+        $scope.mappings = data.result;
+    },function(data){
+        console.log("Error while retrieving mapping!!");
+    });
+
 
 }])
 .controller('FilterController',['$scope','$window','SettingService','TvGuideService',function($scope,$window,settings,service){
@@ -120,7 +164,9 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
     }
 })
 .controller('FavoriteController',['$scope','SettingService',function($scope,service){
-   
+   $scope.favoriteSelect = function(){
+
+   }
     $scope.removeFavorite = function(id){
         service.remove(id).then(function(data){
             $scope.watchlist = data;

@@ -33,6 +33,9 @@ action column to switch to the correct channel!
 
 ## Changelog
 
+0.0.3
+* Fixed an issue that caused the mapping not to be shown to the user after it was stored.
+
 0.0.2
 * Added trigger to work on any favorite. This can be used as a general trigger if you don't want to change your flows all the time.
 
