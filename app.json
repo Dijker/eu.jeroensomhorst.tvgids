@@ -18,6 +18,11 @@
         "name": "Jeroen Somhorst",
         "email": "j.somhorst@gmail.com"
     },
+    "category": ["internet","toosl","video"], 
+    "tags": {
+        "en": ["tvguide","guide","tv"],
+        "nl": ["tvgids","gids","tv","programma"]
+    },
     "flow": {
         "triggers": [{
             "id": "any_program_start", 
