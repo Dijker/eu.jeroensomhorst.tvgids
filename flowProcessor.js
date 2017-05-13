@@ -9,7 +9,6 @@ class flowProcessor{
     }
 	
     init(){
-        this.manager.on('trigger.program_start',(callback,args,state)=> {this.onProgramStartTriggerTrigger(callback,args,state)});
         this.manager.on("trigger.any_program_start",(callback,args,state)=>{this.onAnyProgramStartTrigger(callback,args,state)});
         this.manager.on('trigger.program_start.name.autocomplete',(callback,args)=>{this.programAutoComplete(callback,args)});
         this.parseChannelData(); // trigger it on load
@@ -79,7 +78,6 @@ class flowProcessor{
                         "programdata": value
                     };
                     
-                    this.manager.trigger('program_start',state,args);
                     this.manager.trigger('any_program_start',state,args);
                 }
 
@@ -105,13 +103,15 @@ class flowProcessor{
 
     onProgramStartTriggerTrigger(callback,args,state){
         console.log("On program start trigger");
-        console.log(args);
-        console.log(state);
 
         var programData = state.programdata;
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
         var program = args.name;
         var id = program.id;
+
+        console.log(id);
+        console.log(programData.db_id);
+
         if(programData.db_id == id){ // its the same
             console.log("trigger");
             var startDate = new Date(programData.datum_start);
@@ -140,9 +140,7 @@ class flowProcessor{
 
     onAnyProgramStartTrigger(callback,args,state){
         console.log("On any program start trigger");
-        console.log(args);
-        console.log(state);
-
+        
         var programData = state.programdata;
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
         var startDate = new Date(programData.datum_start);
