@@ -68,7 +68,7 @@ class flowProcessor{
                 var startDate = new Date(value.datum_start);
                 startDate.setSeconds(0);
                 startDate.setMilliseconds(0);
-                
+                console.log(currentDate<=startDate);
                 if(currentDate <= startDate){ // if currentdate is before or on the startdate of the program
                     console.log("Validate triggers");
                     var state = {

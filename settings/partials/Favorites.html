@@ -14,8 +14,8 @@
         <tbody>
             <tr data-ng-repeat="entry in watchlist.result track by entry.db_id">
                 <td><span>{{entry.titel}}</span></td>
-                <td><span>{{entry.datum_start | limitTo : -8}}</span></td>
-                <td><span>{{entry.datum_end | limitTo : -8}}</span></td>
+                <td><span>{{entry.datum_start}}</span></td>
+                <td><span>{{entry.datum_end}}</span></td>
                 <td><a ng-click="removeFavorite(entry.db_id)"><i class="fa fa-ban" aria-hidden="true"></i></a></td>
             </tr>
         </tbody>
