@@ -20,7 +20,7 @@
     },
     "flow": {
         "triggers": [{
-            "id": "anny_program_start", 
+            "id": "any_program_start", 
             "title": {
                 "en": "A favorite program starts",
                 "nl": "Een favoriet programma start"
