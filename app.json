@@ -88,6 +88,40 @@
                         }
                     ]
                 }]
+        },{
+            "id" : "channel_program_starts",
+            "title": {
+                "en": "A program starts on channel..",
+                "nl": "Een programma start op kanaal..."
+            },
+            "tokens":[
+                {
+                    "name": "title",
+                    "type": "string",
+                    "title": {
+                        "en": "Titel",
+                        "nl": "Titel"
+                    },
+                    "example": "Pingu"
+                },
+                {
+                    "name": "channel",
+                    "type": "string",
+                    "title": {
+                        "en": "Channel",
+                        "nl": "Kanaal"
+                    },
+                    "example": {
+                        "en": "NPO 1",
+                        "nl": "NPO 1"
+                    }
+                }
+            ],
+            "args":[
+                {
+                    "name": "channel",
+                    "type": "autocomplete"}
+                ]
         }],
         "conditions": [],
         "actions": []
