@@ -9,11 +9,28 @@ class flowProcessor{
     }
 	
     init(){
+
+        this.initSettings();
+
         this.manager.on("trigger.any_program_start",(callback,args,state)=>{this.onAnyProgramStartTrigger(callback,args,state)});
+        this.manager.on("trigger.program_start",(callback,args,state)=>{this.onProgramStartTriggerTrigger(callback,args,state)});
         this.manager.on('trigger.program_start.name.autocomplete',(callback,args)=>{this.programAutoComplete(callback,args)});
         this.parseChannelData(); // trigger it on load
         setInterval(()=>{this.parseChannelData()},60000); //  every minute check if we need to trigger things
     }
+
+    initSettings(){
+        var settingsManager = Homey.manager('settings');
+        if(settingsManager.get('watchlist') == null ){ // watchlist is non existent. Add dummy value
+            settingsManager.set('watchlist',{});
+        }
+
+        if(settingsManager.get('channelmapping') == null){
+            settingsManager.set('channelmapping',[]);
+        }
+
+    }
+
 
     programAutoComplete(callback,args){
         var returnValue = [];
@@ -77,7 +94,11 @@ class flowProcessor{
                     var args = {
                         "programdata": value
                     };
-                    
+
+
+                    console.log("trigger program_start trigger");
+                    this.manager.trigger("program_start",state,args);
+                    console.log("trigger any_program_start trigger");
                     this.manager.trigger('any_program_start',state,args);
                 }
 
