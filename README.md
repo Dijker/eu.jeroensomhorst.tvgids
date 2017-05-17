@@ -33,6 +33,10 @@ action column to switch to the correct channel!
 
 ## Changelog
 
+0.0.5
+* Fixed the auto completion for the favorite watch card (card still not working)
+* Hopefully fixed the triggering for favorites
+
 0.0.4
 * Removed the single favorite watch card because it was buggy ;)
 
