@@ -9,7 +9,8 @@
             "title": "Titel",
             "date_start": "Start",
             "date_end": "Einde",
-            "watchlist": "Favoriet"
+            "watchlist": "Favoriet",
+            "channel": "Zender"
         },
         "tabs": {
             "tvguide": {

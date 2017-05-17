@@ -9,7 +9,8 @@
             "title": "Title",
             "date_start": "Start",
             "date_end": "End",
-            "watchlist": "Favorite"
+            "watchlist": "Favorite",
+            "channel": "Channel"
         },
         "tabs": {
             "tvguide": {

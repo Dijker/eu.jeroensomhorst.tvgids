@@ -150,19 +150,6 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
         
     });
 }])
-.filter('onWatchList',function(){
-    return function(input,watchlist){
-         var styleClass = 'fa fa-star-o';
-        try{
-            for(entry in watchlist.result){
-                if(watchlist.result[entry].db_id == input){
-                    return "fa fa-star";
-                }
-            } 
-        }catch(e){}
-        return styleClass;
-    }
-})
 .controller('FavoriteController',['$scope','SettingService',function($scope,service){
    $scope.favoriteSelect = function(){
 
@@ -175,4 +162,28 @@ angular.module('TvGuideControllers', ['TvGuideServices'])
     }
 
 
-}]);
+}])
+.filter('channelName',function(){
+    return function(input,channels){
+        if(channels != null){
+            for(var i = 0; i < channels.length;i++){
+                if(channels[i].id == input){
+                    return channels[i].name;
+                }
+            }
+        }
+    }
+})
+.filter('onWatchList',function(){
+    return function(input,watchlist){
+         var styleClass = 'fa fa-star-o';
+        try{
+            for(entry in watchlist.result){
+                if(watchlist.result[entry].db_id == input){
+                    return "fa fa-star";
+                }
+            } 
+        }catch(e){}
+        return styleClass;
+    }
+});
