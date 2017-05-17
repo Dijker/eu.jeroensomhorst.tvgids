@@ -73,26 +73,21 @@ class flowProcessor{
     parseChannelData(){
         console.log("Validate watchlist");
         var watchlist = Homey.manager('settings').get('watchlist');
-        console.log("---- watchlist ---");
-        console.log(watchlist);
-        console.log("---- watchlist ---");
-
+        
         if(watchlist != null){
             var currentDate = new Date();
             currentDate.setSeconds(0);
             currentDate.setMilliseconds(0);
-
-            for(var property in watchlist){
-                var value = watchlist[property];
-               
-
+            for(var i = 0; i < watchlist.length;i++){
+                var value = watchlist[i];
+                console.log("validate entry");
+                console.log(value)
+                
                 var startDate = new Date(value.datum_start);
                 startDate.setSeconds(0);
                 startDate.setMilliseconds(0);
-                console.log(currentDate<=startDate);
-                console.log(startDate);
                 console.log(currentDate);
-
+                console.log(startDate);
                 if(currentDate <= startDate){ // if currentdate is before or on the startdate of the program
                     console.log("Validate triggers");
                     var state = {
@@ -170,7 +165,7 @@ class flowProcessor{
         
         var programData = state.programdata;
         console.log("Start: "+programData.datum_start);
-        
+
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
         var startDate = new Date(programData.datum_start);
         startDate.setSeconds(0);
@@ -188,8 +183,10 @@ class flowProcessor{
         console.log(startDate);            
 
         if(currentDate.getTime() == startDate.getTime()){
+            console.log("Trigger it! ")
             callback(null,true);
         }else{            
+            console.log("Don't Trigger it! ")
             callback(null,false);
         }
   

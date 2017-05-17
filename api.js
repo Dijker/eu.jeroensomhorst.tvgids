@@ -121,14 +121,21 @@ module.exports = [
             var value = Homey.manager('settings').get('watchlist');
             
             if(value == null){ // settings found yet
-                value = {};
+                value = [];
             }
             
             if(args.body.hasOwnProperty('db_id')){ // body seems to be correct
-                if(!value.hasOwnProperty(args.body.db_id)){
-                    value[args.body.db_id] = args.body;
+                var contains = false;
+                for(var i = 0;i < value.length;i++){
+                    var entry = value[i];
+                    if(entry.db_id == args.body.db_id){
+                        contains = true;
+                    }
                 }
                 
+                if(!contains){
+                    value.push(args.body);
+                }   
                 Homey.manager('settings').set('watchlist',value);
             }
             var watchlist = Homey.manager('settings') .get('watchlist');
@@ -141,15 +148,19 @@ module.exports = [
         fn: (callback,args)=>{
             if(args.query.hasOwnProperty('id')){
                 var value = Homey.manager('settings').get('watchlist');
-
-                if(value != null){
-                    delete value[args.query.id];
-                    Homey.manager('settings').set('watchlist',value);
-                    var watchlist = Homey.manager('settings') .get('watchlist');
+                var newList = [];
+                for(var i = 0; i < value.length;i++){
+                    var entry = value[i];
+                    if(entry.db_id != args.query.id){
+                        newList.push(entry);
+                    }
                 }
+
+                Homey.manager('settings').set('watchlist',newList);
+                var watchlist = Homey.manager('settings') .get('watchlist');
                 callback(null,watchlist);
             }else{
-               Homey.manager('settings').set('watchlist',{});
+               Homey.manager('settings').set('watchlist',[]);
                var watchlist = Homey.manager('settings') .get('watchlist');
                callback(null,watchlist);
             }
