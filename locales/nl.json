@@ -1,5 +1,5 @@
 {
-    "weekDayArray": ["zondag","maandag","dinsdag","woensdagy","donderdag","vrijdag","zaterdag"],
+    "weekDayArray": ["zondag","maandag","dinsdag","woensdag","donderdag","vrijdag","zaterdag"],
     "settings": {
         "watchlist": {
             "removeWarning": "Weet u zeker dat u uw favorieten wilt verwijderen?",
