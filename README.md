@@ -33,6 +33,11 @@ action column to switch to the correct channel!
 
 ## Changelog
 
+0.0.6
+* Fixed the table layout in various setting pages.
+* Added the channel name to the favorite list
+* Added debug statements in the code
+
 0.0.5
 * Fixed the auto completion for the favorite watch card (card still not working)
 * Hopefully fixed the triggering for favorites
