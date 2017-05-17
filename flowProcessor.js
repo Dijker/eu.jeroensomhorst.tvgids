@@ -35,6 +35,7 @@ class flowProcessor{
     programAutoComplete(callback,args){
         var returnValue = [];
         var watchlist = Homey.manager('settings').get( 'watchlist' );
+        
         if(args.query != ""){
             
 
@@ -72,6 +73,10 @@ class flowProcessor{
     parseChannelData(){
         console.log("Validate watchlist");
         var watchlist = Homey.manager('settings').get('watchlist');
+        console.log("---- watchlist ---");
+        console.log(watchlist);
+        console.log("---- watchlist ---");
+
         if(watchlist != null){
             var currentDate = new Date();
             currentDate.setSeconds(0);
@@ -85,6 +90,9 @@ class flowProcessor{
                 startDate.setSeconds(0);
                 startDate.setMilliseconds(0);
                 console.log(currentDate<=startDate);
+                console.log(startDate);
+                console.log(currentDate);
+
                 if(currentDate <= startDate){ // if currentdate is before or on the startdate of the program
                     console.log("Validate triggers");
                     var state = {
@@ -95,9 +103,6 @@ class flowProcessor{
                         "programdata": value
                     };
 
-
-                    console.log("trigger program_start trigger");
-                    this.manager.trigger("program_start",state,args);
                     console.log("trigger any_program_start trigger");
                     this.manager.trigger('any_program_start',state,args);
                 }
@@ -161,8 +166,11 @@ class flowProcessor{
 
     onAnyProgramStartTrigger(callback,args,state){
         console.log("On any program start trigger");
+        console.log("Offset: "+args.offset);
         
         var programData = state.programdata;
+        console.log("Start: "+programData.datum_start);
+        
         var offset = parseInt(args.offset) * 60000; // offset in milliseconds;
         var startDate = new Date(programData.datum_start);
         startDate.setSeconds(0);
